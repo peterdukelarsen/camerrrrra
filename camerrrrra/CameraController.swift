@@ -84,6 +84,10 @@ extension CameraController {
             captureSession.startRunning()
         }
         
+        func configureISO (iso:Float) throws {
+            self.rearCamera?.setExposureModeCustom(duration: AVCaptureDevice.currentExposureDuration, iso: iso, completionHandler: nil)
+        }
+        
         DispatchQueue(label: "prepare").async {
             do {
                 createCaptureSession()
