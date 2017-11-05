@@ -23,8 +23,13 @@ class ViewController: UIViewController {
                 return
             }
             
+            // This orients the image as if you took it landscape
+            let imageOrientation: UIImageOrientation = .up
+            let cgImage: CGImage = image.cgImage!
+            let orientedImage = UIImage(cgImage: cgImage, scale: 1.0, orientation: imageOrientation)
+            
             try? PHPhotoLibrary.shared().performChangesAndWait {
-                PHAssetChangeRequest.creationRequestForAsset(from: image)
+                PHAssetChangeRequest.creationRequestForAsset(from: orientedImage)
             }
         }
     }

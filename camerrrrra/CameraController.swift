@@ -114,7 +114,6 @@ extension CameraController {
         
         let settings = AVCapturePhotoSettings()
         
-        
         self.photoOutput?.capturePhoto(with: settings, delegate: self)
         self.photoCaptureCompletionBlock = completion
     }
