@@ -8,12 +8,40 @@
 
 import UIKit
 import Photos
+import AVFoundation
 
 class ViewController: UIViewController {
     let cameraController = CameraController()
     
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var previewCaptureView: UIView!
+    @IBOutlet weak var ISOSelectorView: UISegmentedControl!
+    @IBOutlet weak var ISOSlider: UISlider!
+    
+    @IBAction func ISOChange(_ sender: Any) {
+        
+    }
+    @IBAction func ISOSelector(_ sender: Any) {
+        switch ISOSelectorView.selectedSegmentIndex{
+        case 0:
+            try? cameraController.configureISO(iso: 100)
+            break
+        case 1:
+            try? cameraController.configureISO(iso: 200)
+            break
+        case 2:
+            try? cameraController.configureISO(iso: 400)
+            break
+        case 3:
+            try? cameraController.configureISO(iso: 800)
+            break
+        case 4:
+            try? cameraController.configureISO(iso: 1600)
+            break
+        default:
+            break
+        }
+    }
     
     
     @IBAction func captureImage(_ sender: UIButton) {
@@ -50,15 +78,22 @@ extension ViewController {
             }
         }
         
+        func styleISOSlider() {
+            ISOSlider.minimumValue = cameraController.getMinISO()
+            ISOSlider.maximumValue = cameraController.getMaxISO()
+        }
+        
         func styleCaptureButton() {
             captureButton.layer.borderColor = UIColor.white.cgColor
             captureButton.layer.borderWidth = 3
             
             captureButton.layer.cornerRadius = min(captureButton.frame.width, captureButton.frame.height) / 2
         }
+        
         previewCaptureView.translatesAutoresizingMaskIntoConstraints = false
         styleCaptureButton()
         configureCameraController()
+        
     }
 
     override func didReceiveMemoryWarning() {

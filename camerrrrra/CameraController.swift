@@ -84,10 +84,6 @@ extension CameraController {
             captureSession.startRunning()
         }
         
-        func configureISO (iso:Float) throws {
-            self.rearCamera?.setExposureModeCustom(duration: AVCaptureDevice.currentExposureDuration, iso: iso, completionHandler: nil)
-        }
-        
         DispatchQueue(label: "prepare").async {
             do {
                 createCaptureSession()
@@ -121,6 +117,26 @@ extension CameraController {
         self.photoOutput?.capturePhoto(with: settings, delegate: self)
         self.photoCaptureCompletionBlock = completion
     }
+    
+    func getMinISO ( -> minISO) {
+        return self.rearCamera?.activeFormat.minISO
+    }
+    
+    func getMaxISO ( -> maxISO) {
+        return self.rearCamera?.activeFormat.maxISO
+    }
+    
+    func configureISO (iso:Float) throws {
+        if let camera = self.rearCamera {
+            try camera.lockForConfiguration()
+            camera.setExposureModeCustom(duration: AVCaptureDevice.currentExposureDuration, iso: iso, completionHandler: nil)
+            camera.unlockForConfiguration()
+        }
+        else {
+            throw CameraControllerError.noCamerasAvailable
+        }
+    }
+    
 }
 
 extension CameraController: AVCapturePhotoCaptureDelegate {
