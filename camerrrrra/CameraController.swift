@@ -118,12 +118,12 @@ extension CameraController {
         self.photoCaptureCompletionBlock = completion
     }
     
-    func getMinISO ( -> minISO) {
-        return self.rearCamera?.activeFormat.minISO
+    func getMinISO () -> Float {
+        return (self.rearCamera?.activeFormat.minISO)!
     }
     
-    func getMaxISO ( -> maxISO) {
-        return self.rearCamera?.activeFormat.maxISO
+    func getMaxISO () -> Float {
+        return (self.rearCamera?.activeFormat.maxISO)!
     }
     
     func configureISO (iso:Float) throws {

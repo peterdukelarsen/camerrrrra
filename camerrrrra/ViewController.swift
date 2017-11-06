@@ -18,9 +18,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var ISOSelectorView: UISegmentedControl!
     @IBOutlet weak var ISOSlider: UISlider!
     
-    @IBAction func ISOChange(_ sender: Any) {
-        
+    @IBAction func ISOChange(_ sender: UISlider) {
+        try? cameraController.configureISO(iso: sender.value)
     }
+    
     @IBAction func ISOSelector(_ sender: Any) {
         switch ISOSelectorView.selectedSegmentIndex{
         case 0:
@@ -92,6 +93,7 @@ extension ViewController {
         
         previewCaptureView.translatesAutoresizingMaskIntoConstraints = false
         styleCaptureButton()
+        styleISOSlider()
         configureCameraController()
         
     }
