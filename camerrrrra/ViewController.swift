@@ -13,37 +13,22 @@ import AVFoundation
 class ViewController: UIViewController {
     let cameraController = CameraController()
     
+    @IBOutlet weak var rotatePromptText: UILabel!
+    @IBOutlet weak var rotatePrompt: UIImageView!
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var previewCaptureView: UIView!
     @IBOutlet weak var ISOSelectorView: UISegmentedControl!
     @IBOutlet weak var ISOSlider: UISlider!
     
-    @IBAction func ISOChange(_ sender: UISlider) {
-        try? cameraController.configureISO(iso: sender.value)
-    }
-    
-    @IBAction func ISOSelector(_ sender: Any) {
-        switch ISOSelectorView.selectedSegmentIndex{
-        case 0:
-            try? cameraController.configureISO(iso: 100)
-            break
-        case 1:
-            try? cameraController.configureISO(iso: 200)
-            break
-        case 2:
-            try? cameraController.configureISO(iso: 400)
-            break
-        case 3:
-            try? cameraController.configureISO(iso: 800)
-            break
-        case 4:
-            try? cameraController.configureISO(iso: 1600)
-            break
-        default:
-            break
+    @IBOutlet weak var verticalSlider: UISlider!{
+        didSet{
+            verticalSlider.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
         }
     }
     
+    @IBAction func ISOChange(_ sender: UISlider) {
+        try? cameraController.configureISO(isoLevel: sender.value)
+    }
     
     @IBAction func captureImage(_ sender: UIButton) {
         cameraController.captureImage {(image, error) in
@@ -65,8 +50,39 @@ class ViewController: UIViewController {
 }
 
 extension ViewController {
+    func hideButtons() {
+        verticalSlider.isHidden = true
+        rotatePrompt.isHidden = false
+        rotatePromptText.isHidden = false
+    }
+    
+    func showButtons() {
+        verticalSlider.isHidden = false
+        rotatePrompt.isHidden = true
+        rotatePromptText.isHidden = true
+    }
+    
+    func handleRotation(notification: Notification) -> Void{
+        let orientation = UIDevice.current.orientation
+        if (orientation == .landscapeLeft) {
+            showButtons()
+        }
+        else if (orientation == .portrait ||
+            orientation == .portraitUpsideDown ||
+            orientation == .landscapeRight) {
+            hideButtons()
+        }
+    }
+}
+
+extension ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let notificationCenter = NotificationCenter.default
+        
+        notificationCenter.addObserver(forName: .UIDeviceOrientationDidChange, object: nil, queue: .main, using: handleRotation)
+        
         // Do any additional setup after loading the view, typically from a nib.
         func configureCameraController() {
             cameraController.prepare {(error) in
@@ -80,8 +96,8 @@ extension ViewController {
         }
         
         func styleISOSlider() {
-            ISOSlider.minimumValue = cameraController.getMinISO()
-            ISOSlider.maximumValue = cameraController.getMaxISO()
+            ISOSlider.minimumValue = 0.0;
+            ISOSlider.maximumValue = 1.0;
         }
         
         func styleCaptureButton() {
@@ -90,8 +106,7 @@ extension ViewController {
             
             captureButton.layer.cornerRadius = min(captureButton.frame.width, captureButton.frame.height) / 2
         }
-        
-        previewCaptureView.translatesAutoresizingMaskIntoConstraints = false
+
         styleCaptureButton()
         styleISOSlider()
         configureCameraController()

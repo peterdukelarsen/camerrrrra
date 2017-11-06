@@ -126,7 +126,17 @@ extension CameraController {
         return (self.rearCamera?.activeFormat.maxISO)!
     }
     
-    func configureISO (iso:Float) throws {
+    func configureISO (isoLevel:Float) throws {
+        if (isoLevel < 0 || isoLevel > 1){
+            print("argument out of range")
+            return
+        }
+        
+        let max = self.getMaxISO()
+        let min = self.getMinISO()
+        
+        let iso = min + isoLevel * (max - min)
+        
         if let camera = self.rearCamera {
             try camera.lockForConfiguration()
             camera.setExposureModeCustom(duration: AVCaptureDevice.currentExposureDuration, iso: iso, completionHandler: nil)
