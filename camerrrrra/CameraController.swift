@@ -147,6 +147,46 @@ extension CameraController {
         }
     }
     
+    func getMaxSpeed() -> CMTime {
+        return (self.rearCamera?.activeFormat.maxExposureDuration)!
+    }
+    
+    func getMinSpeed() -> CMTime {
+        return (self.rearCamera?.activeFormat.minExposureDuration)!
+    }
+    
+    func configureSpeed (speedLevel:Float) throws {
+        
+        print("Current exposure duration: ")
+        print(AVCaptureDevice.currentExposureDuration)
+        
+        let CMSpeedLevel = CMTimeMakeWithSeconds(Float64(speedLevel)/100, 100)
+        
+        let max = self.getMaxSpeed()
+        let min = self.getMinSpeed()
+        
+        let speed = CMTimeAdd(min, CMTimeMultiply(CMSpeedLevel, Int32(CMTimeGetSeconds(CMTimeSubtract(max, min)))))
+        print("min: ")
+        print(min)
+        print("max: ")
+        print(max)
+        print("speed: ")
+        print(speed)
+        print(speedLevel)
+        print("CMSpeedLevel: ")
+        print(CMSpeedLevel)
+        
+        if let camera = self.rearCamera {
+            try camera.lockForConfiguration()
+            camera.setExposureModeCustom(duration: speed, iso: AVCaptureDevice.currentISO, completionHandler: nil)
+            camera.unlockForConfiguration()
+            print(speed)
+        }
+        else {
+            throw CameraControllerError.noCamerasAvailable
+        }
+    }
+    
 }
 
 extension CameraController: AVCapturePhotoCaptureDelegate {

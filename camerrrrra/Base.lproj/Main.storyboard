@@ -48,6 +48,13 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="d3p-lW-02b">
+                                        <rect key="frame" x="-34" y="318" width="268" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="SpeedChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="L15-fp-GYf"/>
+                                        </connections>
+                                    </slider>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -67,10 +74,12 @@
                     </view>
                     <connections>
                         <outlet property="ISOSlider" destination="Hkt-kY-eyc" id="VJ1-uQ-mPD"/>
+                        <outlet property="SpeedSlider" destination="d3p-lW-02b" id="abs-Vq-QQh"/>
                         <outlet property="captureButton" destination="3wi-IR-lb8" id="d4T-Yu-2JA"/>
                         <outlet property="previewCaptureView" destination="xIC-ZP-MmX" id="Azw-BM-WNq"/>
                         <outlet property="rotatePrompt" destination="8Ew-0k-OYH" id="fKy-ab-l38"/>
                         <outlet property="rotatePromptText" destination="ZuS-sU-rrY" id="VVR-GA-LwR"/>
+                        <outlet property="vertSlider" destination="d3p-lW-02b" id="izf-wP-p2q"/>
                         <outlet property="verticalSlider" destination="Hkt-kY-eyc" id="j8L-tb-Sxx"/>
                     </connections>
                 </viewController>

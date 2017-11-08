@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var previewCaptureView: UIView!
     @IBOutlet weak var ISOSelectorView: UISegmentedControl!
     @IBOutlet weak var ISOSlider: UISlider!
+    @IBOutlet weak var SpeedSlider: UISlider!
     
     @IBOutlet weak var verticalSlider: UISlider!{
         didSet{
@@ -26,8 +27,16 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var vertSlider: UISlider!{
+        didSet{
+            vertSlider.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
+        }
+    }
     @IBAction func ISOChange(_ sender: UISlider) {
         try? cameraController.configureISO(isoLevel: sender.value)
+    }
+    @IBAction func SpeedChange(_ sender: UISlider) {
+        try? cameraController.configureSpeed(speedLevel: sender.value)
     }
     
     @IBAction func captureImage(_ sender: UIButton) {
@@ -52,12 +61,14 @@ class ViewController: UIViewController {
 extension ViewController {
     func hideButtons() {
         verticalSlider.isHidden = true
+        vertSlider.isHidden = true
         rotatePrompt.isHidden = false
         rotatePromptText.isHidden = false
     }
     
     func showButtons() {
         verticalSlider.isHidden = false
+        vertSlider.isHidden = false
         rotatePrompt.isHidden = true
         rotatePromptText.isHidden = true
     }
