@@ -156,7 +156,7 @@ extension CameraController {
     }
     
     func configureSpeed (speedLevel:Float) throws {
-        
+        /*
         print("Current exposure duration: ")
         print(AVCaptureDevice.currentExposureDuration)
         
@@ -175,7 +175,52 @@ extension CameraController {
         print(speedLevel)
         print("CMSpeedLevel: ")
         print(CMSpeedLevel)
+        */
         
+        let speedInt = Int32(speedLevel)
+        print(speedInt)
+        var speed = CMTimeMake(1, 200)
+        print(speed)
+        switch speedInt {
+        case 0:
+            speed = CMTimeMake(1, 10)
+            break
+        case 1:
+            speed = CMTimeMake(1, 50)
+            break
+        case 2:
+            speed = CMTimeMake(1, 100)
+            break
+        case 3:
+            speed = CMTimeMake(1, 125)
+            break
+        case 4:
+            speed = CMTimeMake(1, 200)
+            break
+        case 5:
+            speed = CMTimeMake(1, 250)
+            break
+        case 6:
+            speed = CMTimeMake(1, 400)
+            break
+        case 7:
+            speed = CMTimeMake(1, 475)
+            break
+        case 8:
+            speed = CMTimeMake(1, 550)
+            break
+        case 9:
+            speed = CMTimeMake(1, 600)
+            break
+        case 10:
+            speed = CMTimeMake(1, 700)
+            break
+        default:
+            speed = CMTimeMake(1, 300)
+            break
+        }
+ 
+        print(speed)
         if let camera = self.rearCamera {
             try camera.lockForConfiguration()
             camera.setExposureModeCustom(duration: speed, iso: AVCaptureDevice.currentISO, completionHandler: nil)
