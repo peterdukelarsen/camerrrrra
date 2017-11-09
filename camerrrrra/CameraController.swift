@@ -186,19 +186,19 @@ extension CameraController {
             speed = CMTimeMake(1, 10)
             break
         case 1:
-            speed = CMTimeMake(1, 50)
+            speed = CMTimeMake(1, 25)
             break
         case 2:
-            speed = CMTimeMake(1, 100)
+            speed = CMTimeMake(1, 50)
             break
         case 3:
-            speed = CMTimeMake(1, 125)
+            speed = CMTimeMake(1, 75)
             break
         case 4:
-            speed = CMTimeMake(1, 200)
+            speed = CMTimeMake(1, 100)
             break
         case 5:
-            speed = CMTimeMake(1, 250)
+            speed = CMTimeMake(1, 150)
             break
         case 6:
             speed = CMTimeMake(1, 400)
@@ -230,6 +230,28 @@ extension CameraController {
         else {
             throw CameraControllerError.noCamerasAvailable
         }
+    }
+    
+    func configureWB(wb: Float) throws {
+        print(self.rearCamera?.deviceWhiteBalanceGains)
+        let curVals = self.rearCamera?.temperatureAndTintValues(for: (self.rearCamera?.deviceWhiteBalanceGains)!)
+        var tempAndTint = AVCaptureDevice.WhiteBalanceTemperatureAndTintValues.init()
+        tempAndTint.tint = wb
+        tempAndTint.temperature = (curVals?.temperature)!
+        print("tempAndTint: ")
+        print(tempAndTint)
+        if let camera = self.rearCamera {
+            try camera.lockForConfiguration()
+            camera.deviceWhiteBalanceGains(for: tempAndTint)
+            let wbGains = camera.deviceWhiteBalanceGains(for: tempAndTint)
+            print(wbGains)
+            camera.setWhiteBalanceModeLocked(with: wbGains, completionHandler: nil)
+            camera.unlockForConfiguration()
+        }
+        else {
+            throw CameraControllerError.noCamerasAvailable
+        }
+        print(self.rearCamera?.deviceWhiteBalanceGains)
     }
     
 }
