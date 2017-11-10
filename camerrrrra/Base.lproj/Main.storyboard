@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIC-ZP-MmX">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <view contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIC-ZP-MmX">
+                                <rect key="frame" x="0.0" y="48" width="375" height="667"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wi-IR-lb8">
                                         <rect key="frame" x="153" y="578" width="69" height="69"/>
@@ -48,20 +48,37 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="d3p-lW-02b">
-                                        <rect key="frame" x="-34" y="318" width="268" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <connections>
-                                            <action selector="SpeedChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="L15-fp-GYf"/>
-                                        </connections>
-                                    </slider>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-50" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="6Jr-nl-hMb">
-                                        <rect key="frame" x="18" y="319" width="254" height="30"/>
+                                        <rect key="frame" x="-128" y="319" width="298" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="WBChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="W7a-Vk-dV4"/>
                                         </connections>
                                     </slider>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="d3p-lW-02b">
+                                        <rect key="frame" x="-133" y="319" width="308" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="SpeedChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="L15-fp-GYf"/>
+                                        </connections>
+                                    </slider>
+                                    <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yQD-Zb-Q4K">
+                                        <rect key="frame" x="0.0" y="-12" width="375" height="631"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    </view>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7pa-iR-6he">
+                                        <rect key="frame" x="-92" y="320" width="336" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <segments>
+                                            <segment title="ISO"/>
+                                            <segment title="Shutter Speed"/>
+                                            <segment title="White Balance"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="sliderChoice:" destination="BYZ-38-t0r" eventType="valueChanged" id="KZh-dn-Vgg"/>
+                                        </connections>
+                                    </segmentedControl>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -80,15 +97,18 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="ChooseSlider" destination="7pa-iR-6he" id="JdR-5w-0pm"/>
                         <outlet property="ISOSlider" destination="Hkt-kY-eyc" id="VJ1-uQ-mPD"/>
                         <outlet property="SpeedSlider" destination="d3p-lW-02b" id="abs-Vq-QQh"/>
                         <outlet property="WBSlider" destination="6Jr-nl-hMb" id="Las-Ez-vad"/>
                         <outlet property="captureButton" destination="3wi-IR-lb8" id="d4T-Yu-2JA"/>
+                        <outlet property="hideFlash" destination="yQD-Zb-Q4K" id="wPP-mg-ihf"/>
                         <outlet property="previewCaptureView" destination="xIC-ZP-MmX" id="Azw-BM-WNq"/>
                         <outlet property="rotatePrompt" destination="8Ew-0k-OYH" id="fKy-ab-l38"/>
                         <outlet property="rotatePromptText" destination="ZuS-sU-rrY" id="VVR-GA-LwR"/>
                         <outlet property="vSlider" destination="6Jr-nl-hMb" id="9KO-mm-yq0"/>
                         <outlet property="vertSlider" destination="d3p-lW-02b" id="izf-wP-p2q"/>
+                        <outlet property="verticalChooser" destination="7pa-iR-6he" id="NEy-ZB-FrD"/>
                         <outlet property="verticalSlider" destination="Hkt-kY-eyc" id="j8L-tb-Sxx"/>
                     </connections>
                 </viewController>

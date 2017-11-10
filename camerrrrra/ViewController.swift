@@ -12,6 +12,7 @@ import AVFoundation
 
 class ViewController: UIViewController {
     let cameraController = CameraController()
+    var choice = "ISO"
     
     @IBOutlet weak var rotatePromptText: UILabel!
     @IBOutlet weak var rotatePrompt: UIImageView!
@@ -21,7 +22,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var ISOSlider: UISlider!
     @IBOutlet weak var SpeedSlider: UISlider!
     @IBOutlet weak var WBSlider: UISlider!
+    @IBOutlet weak var ChooseSlider: UISegmentedControl!
+    @IBOutlet weak var flash: UIView!
     
+    @IBOutlet weak var hideFlash: UIView!
     @IBOutlet weak var verticalSlider: UISlider!{
         didSet{
             verticalSlider.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
@@ -36,6 +40,36 @@ class ViewController: UIViewController {
     @IBOutlet weak var vSlider: UISlider!{
         didSet{
             vSlider.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
+        }
+    }
+    @IBOutlet weak var verticalChooser: UISegmentedControl!{
+        didSet{
+            verticalChooser.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
+        }
+    }
+    
+    
+    @IBAction func sliderChoice(_ sender: UISegmentedControl) {
+        switch sender.titleForSegment(at: sender.selectedSegmentIndex) {
+        case "ISO"?:
+            verticalSlider.isHidden = false
+            vertSlider.isHidden = true
+            vSlider.isHidden = true
+            break
+        case "Shutter Speed"?:
+            verticalSlider.isHidden = true
+            vertSlider.isHidden = false
+            vSlider.isHidden = true
+            break
+        case "White Balance"?:
+            verticalSlider.isHidden = true
+            vertSlider.isHidden = true
+            vSlider.isHidden = false
+            break
+        default:
+            verticalSlider.isHidden = true
+            vertSlider.isHidden = true
+            vSlider.isHidden = true
         }
     }
     @IBAction func ISOChange(_ sender: UISlider) {
@@ -54,7 +88,7 @@ class ViewController: UIViewController {
                 print(error ?? "Image capture error")
                 return
             }
-            
+            self.camFlash()
             // This orients the image as if you took it landscape
             let imageOrientation: UIImageOrientation = .up
             let cgImage: CGImage = image.cgImage!
@@ -69,19 +103,29 @@ class ViewController: UIViewController {
 
 extension ViewController {
     func hideButtons() {
+        hideFlash.isHidden = true
         verticalSlider.isHidden = true
         vertSlider.isHidden = true
         vSlider.isHidden = true
+        verticalChooser.isHidden = true
         rotatePrompt.isHidden = false
         rotatePromptText.isHidden = false
     }
     
     func showButtons() {
+        hideFlash.isHidden = true
         verticalSlider.isHidden = false
-        vertSlider.isHidden = false
-        vSlider.isHidden = false
+        vertSlider.isHidden = true
+        vSlider.isHidden = true
+        verticalChooser.isHidden = false
         rotatePrompt.isHidden = true
         rotatePromptText.isHidden = true
+    }
+    
+    func camFlash() {
+        hideFlash.isHidden = false
+        hideFlash.isHidden = true
+        print("Flashed")
     }
     
     func handleRotation(notification: Notification) -> Void{
