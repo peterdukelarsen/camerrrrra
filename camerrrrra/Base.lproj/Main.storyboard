@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIC-ZP-MmX">
-                                <rect key="frame" x="0.0" y="48" width="375" height="667"/>
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIC-ZP-MmX">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wi-IR-lb8">
                                         <rect key="frame" x="153" y="578" width="69" height="69"/>
@@ -62,11 +62,6 @@
                                             <action selector="SpeedChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="L15-fp-GYf"/>
                                         </connections>
                                     </slider>
-                                    <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yQD-Zb-Q4K">
-                                        <rect key="frame" x="0.0" y="-12" width="375" height="631"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    </view>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7pa-iR-6he">
                                         <rect key="frame" x="-92" y="320" width="336" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -102,7 +97,6 @@
                         <outlet property="SpeedSlider" destination="d3p-lW-02b" id="abs-Vq-QQh"/>
                         <outlet property="WBSlider" destination="6Jr-nl-hMb" id="Las-Ez-vad"/>
                         <outlet property="captureButton" destination="3wi-IR-lb8" id="d4T-Yu-2JA"/>
-                        <outlet property="hideFlash" destination="yQD-Zb-Q4K" id="wPP-mg-ihf"/>
                         <outlet property="previewCaptureView" destination="xIC-ZP-MmX" id="Azw-BM-WNq"/>
                         <outlet property="rotatePrompt" destination="8Ew-0k-OYH" id="fKy-ab-l38"/>
                         <outlet property="rotatePromptText" destination="ZuS-sU-rrY" id="VVR-GA-LwR"/>

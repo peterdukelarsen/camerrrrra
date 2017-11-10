@@ -25,7 +25,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var ChooseSlider: UISegmentedControl!
     @IBOutlet weak var flash: UIView!
     
-    @IBOutlet weak var hideFlash: UIView!
     @IBOutlet weak var verticalSlider: UISlider!{
         didSet{
             verticalSlider.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
@@ -103,7 +102,6 @@ class ViewController: UIViewController {
 
 extension ViewController {
     func hideButtons() {
-        hideFlash.isHidden = true
         verticalSlider.isHidden = true
         vertSlider.isHidden = true
         vSlider.isHidden = true
@@ -113,7 +111,6 @@ extension ViewController {
     }
     
     func showButtons() {
-        hideFlash.isHidden = true
         verticalSlider.isHidden = false
         vertSlider.isHidden = true
         vSlider.isHidden = true
@@ -123,9 +120,14 @@ extension ViewController {
     }
     
     func camFlash() {
-        hideFlash.isHidden = false
-        hideFlash.isHidden = true
-        print("Flashed")
+        let shutterView = UIView(frame: self.previewCaptureView.frame)
+        shutterView.backgroundColor = UIColor.black
+        view.addSubview(shutterView)
+        UIView.animate(withDuration: 0.2, animations: {
+            shutterView.alpha = 0
+        }, completion: { (_) in
+            shutterView.removeFromSuperview()
+        })
     }
     
     func handleRotation(notification: Notification) -> Void{
