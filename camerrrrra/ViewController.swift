@@ -32,6 +32,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var WBSlider: UISlider!
     @IBOutlet weak var ChooseSlider: UISegmentedControl!
     @IBOutlet weak var flash: UIView!
+    @IBOutlet weak var speedLabel: UILabel!
+    @IBOutlet weak var ISOLabel: UILabel!
+    @IBOutlet weak var wbLabel: UILabel!
     
     var rotate90 = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
     
@@ -61,13 +64,16 @@ class ViewController: UIViewController {
         self.settingChange(setting: Setting.wb)
     }
     @IBAction func ISOChange(_ sender: UISlider) {
-        try? cameraController.configureISO(isoLevel: sender.value)
+        let cam = try? cameraController.configureISO(isoLevel: sender.value)
+        ISOLabel.text = "\(String(describing: cam))"
     }
     @IBAction func SpeedChange(_ sender: UISlider) {
-        try? cameraController.configureSpeed(speedLevel: sender.value)
+        let cam = try? cameraController.configureSpeed(speedLevel: sender.value)
+        speedLabel.text = "\(String(describing: cam))"
     }
     @IBAction func WBChange(_ sender: UISlider) {
         try? cameraController.configureWB(wb: sender.value)
+        wbLabel.text = "\(sender.value)"
     }
     
     @IBAction func captureImage(_ sender: UIButton) {

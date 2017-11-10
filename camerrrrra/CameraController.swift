@@ -126,10 +126,10 @@ extension CameraController {
         return (self.rearCamera?.activeFormat.maxISO)!
     }
     
-    func configureISO (isoLevel:Float) throws {
+    func configureISO (isoLevel:Float) throws -> Float {
         if (isoLevel < 0 || isoLevel > 1){
             print("argument out of range")
-            return
+            return 0
         }
         
         let max = self.getMaxISO()
@@ -145,6 +145,7 @@ extension CameraController {
         else {
             throw CameraControllerError.noCamerasAvailable
         }
+        return iso
     }
     
     func getMaxSpeed() -> CMTime {
@@ -155,27 +156,8 @@ extension CameraController {
         return (self.rearCamera?.activeFormat.minExposureDuration)!
     }
     
-    func configureSpeed (speedLevel:Float) throws {
-        /*
-        print("Current exposure duration: ")
-        print(AVCaptureDevice.currentExposureDuration)
-        
-        let CMSpeedLevel = CMTimeMakeWithSeconds(Float64(speedLevel)/100, 100)
-        
-        let max = self.getMaxSpeed()
-        let min = self.getMinSpeed()
-        
-        let speed = CMTimeAdd(min, CMTimeMultiply(CMSpeedLevel, Int32(CMTimeGetSeconds(CMTimeSubtract(max, min)))))
-        print("min: ")
-        print(min)
-        print("max: ")
-        print(max)
-        print("speed: ")
-        print(speed)
-        print(speedLevel)
-        print("CMSpeedLevel: ")
-        print(CMSpeedLevel)
-        */
+    func configureSpeed (speedLevel:Float) throws -> String {
+        var retSpeed = ""
         
         let speedInt = Int32(speedLevel)
         print(speedInt)
@@ -184,39 +166,51 @@ extension CameraController {
         switch speedInt {
         case 0:
             speed = CMTimeMake(1, 10)
+            retSpeed = "1/10"
             break
         case 1:
             speed = CMTimeMake(1, 25)
+            retSpeed = "1/25"
             break
         case 2:
             speed = CMTimeMake(1, 50)
+            retSpeed = "1/50"
             break
         case 3:
             speed = CMTimeMake(1, 75)
+            retSpeed = "1/75"
             break
         case 4:
             speed = CMTimeMake(1, 100)
+            retSpeed = "1/100"
             break
         case 5:
             speed = CMTimeMake(1, 150)
+            retSpeed = "1/150"
             break
         case 6:
             speed = CMTimeMake(1, 400)
+            retSpeed = "1/400"
             break
         case 7:
             speed = CMTimeMake(1, 475)
+            retSpeed = "1/475"
             break
         case 8:
             speed = CMTimeMake(1, 550)
+            retSpeed = "1/550"
             break
         case 9:
             speed = CMTimeMake(1, 600)
+            retSpeed = "1/600"
             break
         case 10:
             speed = CMTimeMake(1, 700)
+            retSpeed = "1/700"
             break
         default:
             speed = CMTimeMake(1, 300)
+            retSpeed = "1/300"
             break
         }
  
@@ -230,6 +224,7 @@ extension CameraController {
         else {
             throw CameraControllerError.noCamerasAvailable
         }
+        return retSpeed
     }
     
     func configureWB(wb: Float) throws {

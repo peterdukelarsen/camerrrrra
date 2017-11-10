@@ -48,15 +48,8 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-50" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="6Jr-nl-hMb">
-                                        <rect key="frame" x="-128" y="319" width="298" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <connections>
-                                            <action selector="WBChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="W7a-Vk-dV4"/>
-                                        </connections>
-                                    </slider>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="d3p-lW-02b">
-                                        <rect key="frame" x="-133" y="319" width="308" height="30"/>
+                                        <rect key="frame" x="-133" y="227" width="308" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="SpeedChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="L15-fp-GYf"/>
@@ -101,6 +94,13 @@
                                             <action selector="isoPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="itY-t1-Xm4"/>
                                         </connections>
                                     </button>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-50" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="6Jr-nl-hMb">
+                                        <rect key="frame" x="-128" y="404" width="298" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="WBChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="W7a-Vk-dV4"/>
+                                        </connections>
+                                    </slider>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -125,6 +125,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="ISOLabel" destination="Hkt-kY-eyc" id="sTg-wk-Xl0"/>
                         <outlet property="ISOSlider" destination="Hkt-kY-eyc" id="VJ1-uQ-mPD"/>
                         <outlet property="SpeedSlider" destination="d3p-lW-02b" id="abs-Vq-QQh"/>
                         <outlet property="WBSlider" destination="6Jr-nl-hMb" id="Las-Ez-vad"/>
@@ -134,10 +135,12 @@
                         <outlet property="previewCaptureView" destination="xIC-ZP-MmX" id="Azw-BM-WNq"/>
                         <outlet property="rotatePrompt" destination="8Ew-0k-OYH" id="fKy-ab-l38"/>
                         <outlet property="rotatePromptText" destination="ZuS-sU-rrY" id="VVR-GA-LwR"/>
+                        <outlet property="speedLabel" destination="d3p-lW-02b" id="SiL-r1-S5s"/>
                         <outlet property="vSlider" destination="6Jr-nl-hMb" id="9KO-mm-yq0"/>
                         <outlet property="vertSlider" destination="d3p-lW-02b" id="izf-wP-p2q"/>
                         <outlet property="verticalSlider" destination="Hkt-kY-eyc" id="j8L-tb-Sxx"/>
                         <outlet property="wbButton" destination="fuA-AM-Wal" id="d33-1f-awc"/>
+                        <outlet property="wbLabel" destination="6Jr-nl-hMb" id="40G-KY-Cqj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
