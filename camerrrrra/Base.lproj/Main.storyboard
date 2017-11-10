@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIC-ZP-MmX">
+                            <view opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIC-ZP-MmX">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wi-IR-lb8">
@@ -62,48 +62,82 @@
                                             <action selector="SpeedChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="L15-fp-GYf"/>
                                         </connections>
                                     </slider>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7pa-iR-6he">
-                                        <rect key="frame" x="-92" y="320" width="336" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <segments>
-                                            <segment title="ISO"/>
-                                            <segment title="Shutter Speed"/>
-                                            <segment title="White Balance"/>
-                                        </segments>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fuA-AM-Wal">
+                                        <rect key="frame" x="257" y="22" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="BuA-al-G1X"/>
+                                            <constraint firstAttribute="width" constant="50" id="bxV-Sa-g4q"/>
+                                        </constraints>
+                                        <state key="normal" title="wb">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
-                                            <action selector="sliderChoice:" destination="BYZ-38-t0r" eventType="valueChanged" id="KZh-dn-Vgg"/>
+                                            <action selector="wbPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uYS-iO-Qqb"/>
                                         </connections>
-                                    </segmentedControl>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJO-HN-gyU">
+                                        <rect key="frame" x="67" y="22" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="94X-ep-FZO"/>
+                                            <constraint firstAttribute="height" constant="50" id="yjX-Sg-VDs"/>
+                                        </constraints>
+                                        <state key="normal" title="exp">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="expButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yPC-1d-Xfb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sXg-bK-YUn">
+                                        <rect key="frame" x="162" y="22" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Od1-Jp-9Eq"/>
+                                            <constraint firstAttribute="width" constant="50" id="tjY-vd-z5p"/>
+                                        </constraints>
+                                        <state key="normal" title="iso">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="isoPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="itY-t1-Xm4"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="xJO-HN-gyU" firstAttribute="top" secondItem="xIC-ZP-MmX" secondAttribute="top" constant="22" id="8OI-zi-HDJ"/>
                                     <constraint firstAttribute="bottom" secondItem="3wi-IR-lb8" secondAttribute="bottom" constant="20" id="AFO-kH-KBA"/>
+                                    <constraint firstItem="sXg-bK-YUn" firstAttribute="centerX" secondItem="xIC-ZP-MmX" secondAttribute="centerX" id="Be5-8S-Fjc"/>
                                     <constraint firstItem="3wi-IR-lb8" firstAttribute="centerX" secondItem="xIC-ZP-MmX" secondAttribute="centerX" id="OzT-Ci-4fx"/>
+                                    <constraint firstItem="sXg-bK-YUn" firstAttribute="top" secondItem="xIC-ZP-MmX" secondAttribute="top" constant="22" id="PLc-iT-rMl"/>
+                                    <constraint firstItem="fuA-AM-Wal" firstAttribute="top" secondItem="xIC-ZP-MmX" secondAttribute="top" constant="22" id="PU1-AJ-j1m"/>
+                                    <constraint firstItem="fuA-AM-Wal" firstAttribute="leading" secondItem="sXg-bK-YUn" secondAttribute="trailing" constant="45" id="RNb-MH-QrY"/>
+                                    <constraint firstItem="sXg-bK-YUn" firstAttribute="leading" secondItem="xJO-HN-gyU" secondAttribute="trailing" constant="45" id="rTT-bo-hva"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="xIC-ZP-MmX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="2lM-fW-ZIe"/>
                             <constraint firstItem="xIC-ZP-MmX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6bz-4r-sAk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xIC-ZP-MmX" secondAttribute="trailing" id="BKX-ne-8xW"/>
-                            <constraint firstItem="xIC-ZP-MmX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="W7o-pI-5XT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xIC-ZP-MmX" secondAttribute="bottom" id="XrE-BJ-7GJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="ChooseSlider" destination="7pa-iR-6he" id="JdR-5w-0pm"/>
                         <outlet property="ISOSlider" destination="Hkt-kY-eyc" id="VJ1-uQ-mPD"/>
                         <outlet property="SpeedSlider" destination="d3p-lW-02b" id="abs-Vq-QQh"/>
                         <outlet property="WBSlider" destination="6Jr-nl-hMb" id="Las-Ez-vad"/>
                         <outlet property="captureButton" destination="3wi-IR-lb8" id="d4T-Yu-2JA"/>
+                        <outlet property="expButton" destination="xJO-HN-gyU" id="u9H-il-9Wc"/>
+                        <outlet property="isoButton" destination="sXg-bK-YUn" id="kim-h5-tfd"/>
                         <outlet property="previewCaptureView" destination="xIC-ZP-MmX" id="Azw-BM-WNq"/>
                         <outlet property="rotatePrompt" destination="8Ew-0k-OYH" id="fKy-ab-l38"/>
                         <outlet property="rotatePromptText" destination="ZuS-sU-rrY" id="VVR-GA-LwR"/>
                         <outlet property="vSlider" destination="6Jr-nl-hMb" id="9KO-mm-yq0"/>
                         <outlet property="vertSlider" destination="d3p-lW-02b" id="izf-wP-p2q"/>
-                        <outlet property="verticalChooser" destination="7pa-iR-6he" id="NEy-ZB-FrD"/>
                         <outlet property="verticalSlider" destination="Hkt-kY-eyc" id="j8L-tb-Sxx"/>
+                        <outlet property="wbButton" destination="fuA-AM-Wal" id="d33-1f-awc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

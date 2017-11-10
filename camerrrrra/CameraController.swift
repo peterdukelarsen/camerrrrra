@@ -233,7 +233,6 @@ extension CameraController {
     }
     
     func configureWB(wb: Float) throws {
-        print(self.rearCamera?.deviceWhiteBalanceGains)
         let curVals = self.rearCamera?.temperatureAndTintValues(for: (self.rearCamera?.deviceWhiteBalanceGains)!)
         var tempAndTint = AVCaptureDevice.WhiteBalanceTemperatureAndTintValues.init()
         tempAndTint.tint = wb
@@ -251,7 +250,6 @@ extension CameraController {
         else {
             throw CameraControllerError.noCamerasAvailable
         }
-        print(self.rearCamera?.deviceWhiteBalanceGains)
     }
     
 }

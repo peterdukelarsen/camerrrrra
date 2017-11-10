@@ -12,7 +12,15 @@ import AVFoundation
 
 class ViewController: UIViewController {
     let cameraController = CameraController()
-    var choice = "ISO"
+    
+    override var prefersStatusBarHidden: Bool { return true }
+    
+    var selectedSetting = Setting.none
+    let selectedButtonBackground = UIColor.white.withAlphaComponent(0.4)
+    // Setting selector buttons
+    @IBOutlet weak var wbButton: UIButton!
+    @IBOutlet weak var isoButton: UIButton!
+    @IBOutlet weak var expButton: UIButton!
     
     @IBOutlet weak var rotatePromptText: UILabel!
     @IBOutlet weak var rotatePrompt: UIImageView!
@@ -25,9 +33,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var ChooseSlider: UISegmentedControl!
     @IBOutlet weak var flash: UIView!
     
+    var rotate90 = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
+    
     @IBOutlet weak var verticalSlider: UISlider!{
         didSet{
-            verticalSlider.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
+            verticalSlider.transform = rotate90
         }
     }
     
@@ -41,35 +51,14 @@ class ViewController: UIViewController {
             vSlider.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
         }
     }
-    @IBOutlet weak var verticalChooser: UISegmentedControl!{
-        didSet{
-            verticalChooser.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
-        }
+    @IBAction func expButton(_ sender: Any) {
+        self.settingChange(setting: Setting.exp)
     }
-    
-    
-    @IBAction func sliderChoice(_ sender: UISegmentedControl) {
-        switch sender.titleForSegment(at: sender.selectedSegmentIndex) {
-        case "ISO"?:
-            verticalSlider.isHidden = false
-            vertSlider.isHidden = true
-            vSlider.isHidden = true
-            break
-        case "Shutter Speed"?:
-            verticalSlider.isHidden = true
-            vertSlider.isHidden = false
-            vSlider.isHidden = true
-            break
-        case "White Balance"?:
-            verticalSlider.isHidden = true
-            vertSlider.isHidden = true
-            vSlider.isHidden = false
-            break
-        default:
-            verticalSlider.isHidden = true
-            vertSlider.isHidden = true
-            vSlider.isHidden = true
-        }
+    @IBAction func isoPress(_ sender: Any) {
+        self.settingChange(setting: Setting.iso)
+    }
+    @IBAction func wbPress(_ sender: Any) {
+        self.settingChange(setting: Setting.wb)
     }
     @IBAction func ISOChange(_ sender: UISlider) {
         try? cameraController.configureISO(isoLevel: sender.value)
@@ -87,6 +76,7 @@ class ViewController: UIViewController {
                 print(error ?? "Image capture error")
                 return
             }
+            // Runs animation of black overlayed screen fading
             self.camFlash()
             // This orients the image as if you took it landscape
             let imageOrientation: UIImageOrientation = .up
@@ -101,22 +91,68 @@ class ViewController: UIViewController {
 }
 
 extension ViewController {
+    func settingChange(setting: Setting) {
+        var nextSetting = setting
+        if (setting == self.selectedSetting) {
+            nextSetting = Setting.none
+        }
+        self.deselect(setting: self.selectedSetting)
+        self.selectedSetting = nextSetting
+        self.select(setting: nextSetting)
+    }
+    func select(setting: Setting) {
+        // deselect all
+        verticalSlider.isHidden = true
+        vertSlider.isHidden = true
+        vSlider.isHidden = true
+        switch setting {
+        case Setting.iso:
+            isoButton.backgroundColor = selectedButtonBackground
+            verticalSlider.isHidden = false
+        case Setting.exp:
+            expButton.backgroundColor = selectedButtonBackground
+            vertSlider.isHidden = false
+        case Setting.none:
+            // Noop
+            wbButton.backgroundColor = UIColor.clear
+        default:
+            vSlider.isHidden = false
+            wbButton.backgroundColor = selectedButtonBackground
+        }
+    }
+    func deselect(setting: Setting) {
+        switch setting {
+        case Setting.iso:
+            isoButton.backgroundColor = UIColor.clear
+        case Setting.exp:
+            expButton.backgroundColor = UIColor.clear
+        default:
+            // Wb case in default because default is needed
+            wbButton.backgroundColor = UIColor.clear
+        }
+    }
     func hideButtons() {
         verticalSlider.isHidden = true
         vertSlider.isHidden = true
         vSlider.isHidden = true
-        verticalChooser.isHidden = true
         rotatePrompt.isHidden = false
         rotatePromptText.isHidden = false
+        captureButton.isHidden = true
+        
+        isoButton.isHidden = true
+        wbButton.isHidden = true
+        expButton.isHidden = true
     }
     
     func showButtons() {
-        verticalSlider.isHidden = false
-        vertSlider.isHidden = true
-        vSlider.isHidden = true
-        verticalChooser.isHidden = false
+        self.select(setting: self.selectedSetting)
         rotatePrompt.isHidden = true
         rotatePromptText.isHidden = true
+        captureButton.isHidden = false
+        
+        isoButton.isHidden = false
+        wbButton.isHidden = false
+        expButton.isHidden = false
     }
     
     func camFlash() {
@@ -147,8 +183,10 @@ extension ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let notificationCenter = NotificationCenter.default
+        // should start with nothing selected
+        self.settingChange(setting: self.selectedSetting)
         
+        let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(forName: .UIDeviceOrientationDidChange, object: nil, queue: .main, using: handleRotation)
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -168,6 +206,13 @@ extension ViewController {
             ISOSlider.maximumValue = 1.0;
         }
         
+        func styleSettingButton(button: UIButton) {
+            button.layer.borderColor = UIColor.white.cgColor
+            button.layer.borderWidth = 3
+            button.layer.cornerRadius = 10
+            button.transform = rotate90
+        }
+        
         func styleCaptureButton() {
             captureButton.layer.borderColor = UIColor.white.cgColor
             captureButton.layer.borderWidth = 3
@@ -175,6 +220,9 @@ extension ViewController {
             captureButton.layer.cornerRadius = min(captureButton.frame.width, captureButton.frame.height) / 2
         }
 
+        styleSettingButton(button: wbButton)
+        styleSettingButton(button: isoButton)
+        styleSettingButton(button: expButton)
         styleCaptureButton()
         styleISOSlider()
         configureCameraController()
@@ -185,7 +233,13 @@ extension ViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 
+extension ViewController {
+    enum Setting {
+        case iso
+        case wb
+        case exp
+        case none
+    }
+}
