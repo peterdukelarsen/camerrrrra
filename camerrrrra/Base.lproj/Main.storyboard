@@ -35,6 +35,10 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="ISOChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="DHj-rA-nKF"/>
+                                            <action selector="touchDown:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="7uZ-P3-lsP"/>
+                                            <action selector="touchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="RXv-CX-f5k"/>
+                                            <action selector="touchDown:" destination="BYZ-38-t0r" eventType="valueChanged" id="cO4-S7-c0Q"/>
+                                            <action selector="touchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="y47-5X-4DK"/>
                                         </connections>
                                     </slider>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rotate" translatesAutoresizingMaskIntoConstraints="NO" id="8Ew-0k-OYH">
@@ -53,6 +57,10 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="WBChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="W7a-Vk-dV4"/>
+                                            <action selector="touchDown:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="6Vv-1c-Ykr"/>
+                                            <action selector="touchDown:" destination="BYZ-38-t0r" eventType="valueChanged" id="HqU-Y2-fP6"/>
+                                            <action selector="touchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="I2G-21-yhO"/>
+                                            <action selector="touchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="crX-ca-ANA"/>
                                         </connections>
                                     </slider>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="d3p-lW-02b">
@@ -60,6 +68,10 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="SpeedChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="L15-fp-GYf"/>
+                                            <action selector="touchDown:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="2HM-L3-OmS"/>
+                                            <action selector="touchDown:" destination="BYZ-38-t0r" eventType="valueChanged" id="5Tt-r1-5BH"/>
+                                            <action selector="touchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="QF7-dA-HOF"/>
+                                            <action selector="touchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fof-hK-icm"/>
                                         </connections>
                                     </slider>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fuA-AM-Wal">
@@ -81,7 +93,7 @@
                                             <constraint firstAttribute="width" constant="50" id="94X-ep-FZO"/>
                                             <constraint firstAttribute="height" constant="50" id="yjX-Sg-VDs"/>
                                         </constraints>
-                                        <state key="normal" title="exp">
+                                        <state key="normal" title="ss">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>

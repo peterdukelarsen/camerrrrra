@@ -233,25 +233,17 @@ extension CameraController {
     }
     
     func configureWB(wb: Float) throws {
-        let curVals = self.rearCamera?.temperatureAndTintValues(for: (self.rearCamera?.deviceWhiteBalanceGains)!)
-        var tempAndTint = AVCaptureDevice.WhiteBalanceTemperatureAndTintValues.init()
-        tempAndTint.tint = wb
-        tempAndTint.temperature = (curVals?.temperature)!
-        print("tempAndTint: ")
-        print(tempAndTint)
+        let gains = kToRGBGains(k: Int(wb))
         if let camera = self.rearCamera {
             try camera.lockForConfiguration()
-            camera.deviceWhiteBalanceGains(for: tempAndTint)
-            let wbGains = camera.deviceWhiteBalanceGains(for: tempAndTint)
-            print(wbGains)
-            camera.setWhiteBalanceModeLocked(with: wbGains, completionHandler: nil)
+            camera.setWhiteBalanceModeLocked(with: gains, completionHandler: nil)
             camera.unlockForConfiguration()
         }
         else {
             throw CameraControllerError.noCamerasAvailable
         }
+        
     }
-    
 }
 
 extension CameraController: AVCapturePhotoCaptureDelegate {
@@ -266,6 +258,106 @@ extension CameraController: AVCapturePhotoCaptureDelegate {
             self.photoCaptureCompletionBlock?(nil, CameraControllerError.unknown)
         }
     }
+}
+
+extension CameraController {
+    // One decimal of precision,
+    func getCurrentSpeed() -> Float {
+        if let camera = self.rearCamera {
+            return Float(camera.exposureDuration.seconds)
+        }
+        else {
+            return -1
+        }
+    }
+    func getCurrentISO() -> Int {
+        if let camera = self.rearCamera {
+            return Int(camera.iso)
+        }
+        else {
+            return -1
+        }
+    }
+}
+
+extension CameraController {
+    // 1500 K to 15000 K
+    // https://github.com/mattdesl/kelvin-to-rgb/blob/master/index.js
+    func kToRGBGains(k: Int) -> AVCaptureDevice.WhiteBalanceGains {
+        let maxGain: Float
+        if let camera = self.rearCamera {
+            maxGain = camera.maxWhiteBalanceGain
+        }
+        else {
+            maxGain = 1.0
+        }
+        let temp = Float(k / 100)
+        var red: Float
+        var blue: Float
+        var green: Float
+        
+        if (temp <= 66) {
+            red = 255
+        } else {
+            red = Float(temp - 60.0)
+            red = Float(329.698727466 * pow(Double(red), -0.1332047592))
+            if (red < 0) {
+                red = 0
+            }
+            if (red > 255) {
+                red = 255
+            }
+        }
+        
+        if (temp <= 66) {
+            green = temp
+            green = Float(99.4708025861 * log(Double(green)) - 161.1195681661)
+            if (green < 0) {
+                green = 0
+            }
+            if (green > 255) {
+                green = 255
+            }
+        } else {
+            green = temp - 60
+            green = Float(288.1221695283 * pow(Double(green), -0.0755148492))
+            if (green < 0) {
+                green = 0
+            }
+            if (green > 255) {
+                green = 255
+            }
+        }
+        
+        if (temp >= 66) {
+            blue = 255
+        } else {
+            if (temp <= 19) {
+                blue = 0
+            } else {
+                blue = temp - 10
+                blue = Float(138.5177312231 * log(Double(blue)) - 305.0447927307)
+                if (blue < 0) {
+                    blue = 0
+                }
+                if (blue > 255) {
+                    blue = 255
+                }
+            }
+        }
+        func gainFrom255(n: Float) -> Float {
+            return 1.0 + (n / 255) * (maxGain - 1.0)
+        }
+        blue = gainFrom255(n: blue)
+        red = gainFrom255(n: red)
+        green = gainFrom255(n: green)
+        print(blue)
+        print(red)
+        print(green)
+        
+        return AVCaptureDevice.WhiteBalanceGains(redGain: red, greenGain: green, blueGain: blue)
+    }
+    
 }
 
 extension CameraController {
